@@ -1,0 +1,156 @@
+\hypertarget{Lzw_8cpp}{}\doxysection{Referencia del Archivo Lzw.\+cpp}
+\label{Lzw_8cpp}\index{Lzw.cpp@{Lzw.cpp}}
+
+
+LZW file compressor.  
+
+
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$ios$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$istream$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Dependencia gráfica adjunta para Lzw.\+cpp\+:
+% FIG 0
+\doxysubsection*{typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Lzw_8cpp_a619d2136c6e41a4a699a09a314f11388}\label{Lzw_8cpp_a619d2136c6e41a4a699a09a314f11388}} 
+using {\bfseries Tipo\+Codigo} = std\+::uint16\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{Lzw_8cpp_a5aa1f9f377ef543fa623c82c65d26ed2}{comprimir}} (std\+::istream \&entrada, std\+::ostream \&salida)
+\begin{DoxyCompactList}\small\item\em Comprime el contenido de {\ttfamily entrada} y escribe el resultado en {\ttfamily salida}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{Lzw_8cpp_a39899d830f997285725a0774965256cb}{descomprimir}} (std\+::istream \&entrada, std\+::ostream \&salida)
+\begin{DoxyCompactList}\small\item\em Descomprime el contenido de {\ttfamily entrada} y escribe el resultado en {\ttfamily salida}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{Lzw_8cpp_a782dd3ee7a4e38b9ae0d567916d7181d}{imprimir\+\_\+uso}} (const std\+::string \&mensaje=\char`\"{}\char`\"{}, bool mostrar\+Uso=true)
+\begin{DoxyCompactList}\small\item\em Imprime información de uso y un mensaje de error personalizado. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{Lzw_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Punto de entrada principal del programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{Lzw_8cpp_a3b729702efdb446aa3815ebe9a3a47c4}\label{Lzw_8cpp_a3b729702efdb446aa3815ebe9a3a47c4}} 
+const Tipo\+Codigo {\bfseries globales\+::tamano\+Maximo\+Diccionario} \{std\+::numeric\+\_\+limits$<$Tipo\+Codigo$>$\+::max()\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+LZW file compressor. 
+
+\begin{DoxyAuthor}{Autor}
+Julius Pettersson 
+\end{DoxyAuthor}
+\begin{DoxyCopyright}{Copyright}
+MIT/\+Expat License. 
+\end{DoxyCopyright}
+\begin{DoxyVersion}{Versión}
+3
+\end{DoxyVersion}
+This is the C++11 implementation of a Lempel-\/\+Ziv-\/\+Welch single-\/file command-\/line compressor. It uses the simpler fixed-\/width code compression method. It was written with Doxygen comments.
+
+\begin{DoxySeeAlso}{Ver también}
+\href{http://en.wikipedia.org/wiki/Lempel\%E2\%80\%93Ziv\%E2\%80\%93Welch}{\texttt{ http\+://en.\+wikipedia.\+org/wiki/\+Lempel\%\+E2\%80\%93\+Ziv\%\+E2\%80\%93\+Welch}} 
+
+\href{http://marknelson.us/2011/11/08/lzw-revisited/}{\texttt{ http\+://marknelson.\+us/2011/11/08/lzw-\/revisited/}} 
+
+\href{http://www.cs.duke.edu/csed/curious/compression/lzw.html}{\texttt{ http\+://www.\+cs.\+duke.\+edu/csed/curious/compression/lzw.\+html}} 
+
+\href{http://warp.povusers.org/EfficientLZW/index.html}{\texttt{ http\+://warp.\+povusers.\+org/\+Efficient\+LZW/index.\+html}} 
+
+\href{http://en.cppreference.com/}{\texttt{ http\+://en.\+cppreference.\+com/}} 
+
+\href{http://www.doxygen.org/}{\texttt{ http\+://www.\+doxygen.\+org/}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Documentación de las funciones}
+\mbox{\Hypertarget{Lzw_8cpp_a5aa1f9f377ef543fa623c82c65d26ed2}\label{Lzw_8cpp_a5aa1f9f377ef543fa623c82c65d26ed2}} 
+\index{Lzw.cpp@{Lzw.cpp}!comprimir@{comprimir}}
+\index{comprimir@{comprimir}!Lzw.cpp@{Lzw.cpp}}
+\doxysubsubsection{\texorpdfstring{comprimir()}{comprimir()}}
+{\footnotesize\ttfamily void comprimir (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{entrada,  }\item[{std\+::ostream \&}]{salida }\end{DoxyParamCaption})}
+
+
+
+Comprime el contenido de {\ttfamily entrada} y escribe el resultado en {\ttfamily salida}. 
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{ in}}  & {\em entrada} & flujo de entrada \\
+\hline
+\mbox{\texttt{ out}}  & {\em salida} & flujo de salida \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Lzw_8cpp_a39899d830f997285725a0774965256cb}\label{Lzw_8cpp_a39899d830f997285725a0774965256cb}} 
+\index{Lzw.cpp@{Lzw.cpp}!descomprimir@{descomprimir}}
+\index{descomprimir@{descomprimir}!Lzw.cpp@{Lzw.cpp}}
+\doxysubsubsection{\texorpdfstring{descomprimir()}{descomprimir()}}
+{\footnotesize\ttfamily void descomprimir (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{entrada,  }\item[{std\+::ostream \&}]{salida }\end{DoxyParamCaption})}
+
+
+
+Descomprime el contenido de {\ttfamily entrada} y escribe el resultado en {\ttfamily salida}. 
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{ in}}  & {\em entrada} & flujo de entrada \\
+\hline
+\mbox{\texttt{ out}}  & {\em salida} & flujo de salida \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Lzw_8cpp_a782dd3ee7a4e38b9ae0d567916d7181d}\label{Lzw_8cpp_a782dd3ee7a4e38b9ae0d567916d7181d}} 
+\index{Lzw.cpp@{Lzw.cpp}!imprimir\_uso@{imprimir\_uso}}
+\index{imprimir\_uso@{imprimir\_uso}!Lzw.cpp@{Lzw.cpp}}
+\doxysubsubsection{\texorpdfstring{imprimir\_uso()}{imprimir\_uso()}}
+{\footnotesize\ttfamily void imprimir\+\_\+uso (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{mensaje = {\ttfamily \char`\"{}\char`\"{}},  }\item[{bool}]{mostrar\+Uso = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Imprime información de uso y un mensaje de error personalizado. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em mensaje} & mensaje de error personalizado a imprimir \\
+\hline
+{\em mostrar\+Uso} & muestra la información de uso si es verdadero \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{Lzw_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{Lzw_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{Lzw.cpp@{Lzw.cpp}!main@{main}}
+\index{main@{main}!Lzw.cpp@{Lzw.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Punto de entrada principal del programa. 
+
+
+\begin{DoxyParams}[1]{Parámetros}
+ & {\em argc} & número de argumentos de línea de comandos \\
+\hline
+\mbox{\texttt{ in}}  & {\em argv} & array de argumentos de línea de comandos \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyRetVals}{Valores devueltos}
+{\em EXIT\+\_\+\+FAILURE} & operación fallida \\
+\hline
+{\em EXIT\+\_\+\+SUCCESS} & operación exitosa \\
+\hline
+\end{DoxyRetVals}
