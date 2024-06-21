@@ -9,7 +9,7 @@
 using namespace std;
 using namespace std::chrono;
 
-//representar un nodo del árbol de Huffman
+// Representar un nodo del árbol de Huffman
 struct Nodo {
     char simbolo;
     int frecuencia;
@@ -17,14 +17,14 @@ struct Nodo {
     Nodo* derecha;
 };
 
-// comparador para la cola de prioridad
+// Comparador para la cola de prioridad
 struct Comparador {
     bool operator()(Nodo* a, Nodo* b) {
         return a->frecuencia > b->frecuencia;
     }
 };
 
-//construir el árbol de Huffman
+// Construir el árbol de Huffman
 Nodo* construirArbol(const string& texto) {
     unordered_map<char, int> frecuencias;
     for (char c : texto) {
@@ -57,7 +57,7 @@ Nodo* construirArbol(const string& texto) {
     return cola.top();
 }
 
-// generar la tabla de códigos
+// Generar la tabla de códigos
 void generarTablaCodigos(Nodo* nodo, string codigo, unordered_map<char, string>& tabla) {
     if (nodo == nullptr) {
         return;
@@ -71,7 +71,7 @@ void generarTablaCodigos(Nodo* nodo, string codigo, unordered_map<char, string>&
     generarTablaCodigos(nodo->derecha, codigo + "1", tabla);
 }
 
-//codificar el texto 
+// Codificar el texto
 string codificar(const string& texto, Nodo* raiz, unordered_map<char, string>& tablaCodigos) {
     generarTablaCodigos(raiz, "", tablaCodigos);
 
@@ -83,7 +83,7 @@ string codificar(const string& texto, Nodo* raiz, unordered_map<char, string>& t
     return codificado;
 }
 
-// decodificar 
+// Decodificar
 string decodificar(const string& codificado, Nodo* raiz) {
     string decodificado;
     Nodo* nodo = raiz;
@@ -104,7 +104,7 @@ string decodificar(const string& codificado, Nodo* raiz) {
     return decodificado;
 }
 
-//obtener el tamaño de un archivo #include <fstream>
+// Obtener el tamaño de un archivo
 streampos obtenerTamanoArchivo(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo, ios::binary | ios::ate);
     return archivo.tellg();
@@ -147,58 +147,60 @@ string leerBinario(const string& nombreArchivo, int bitsTotales) {
     return codificado;
 }
 
-int main() {
-    // leer el archivo de texto original
-    //se mide el tiempo desde que lee el archivo
-    auto startCodificar = high_resolution_clock::now();
-    ifstream archivoOriginal("PRUEBA.txt");
+int main(int argc, char *argv[]) {
+
+    if (argc != 3) {
+        cerr << "Uso: " << argv[0] << " <archivo_entrada> <archivo_salida>" << endl;
+        return EXIT_FAILURE;
+    }
+
+    string archivoEntrada = argv[1];
+    string archivoSalida = argv[2];
+
+    ifstream archivoOriginal(archivoEntrada);
     if (!archivoOriginal.is_open()) {
-        cerr << "No se pudo abrir el archivo de texto original." << endl;
+        cerr << "No se pudo abrir el archivo de texto original: " << archivoEntrada << endl;
         return 1;
     }
 
+    // Leer el archivo de texto original
+
+    auto startCodificar = high_resolution_clock::now();
     string texto((istreambuf_iterator<char>(archivoOriginal)), istreambuf_iterator<char>());
     archivoOriginal.close();
 
-    
-    
     Nodo* raiz = construirArbol(texto);
     unordered_map<char, string> tablaCodigos;
     string codificado = codificar(texto, raiz, tablaCodigos);
 
-    //hasta que termina de construir el arbol
-    auto endCodificar = high_resolution_clock::now();
-    auto duracionCodificar = duration_cast<duration<double>>(endCodificar - startCodificar);
-    
-    
-    cout << "Tabla de códigos de Huffman:" << endl;
+    /*cout << "Tabla de códigos de Huffman:" << endl;
     for (const auto& par : tablaCodigos) {
         cout << par.first << ": " << par.second << endl;
     }
+    */
+    escribirBinario(codificado, archivoSalida);
 
-    
-    escribirBinario(codificado, "texto_codificado.bin");
+    auto endCodificar = high_resolution_clock::now();
+    auto duracionCodificar = duration_cast<nanoseconds>(endCodificar - startCodificar);
 
-
-   //se mide el tiempo desde que recibe el texto codificado
-   auto startDecodificar = high_resolution_clock::now();
-    string textoCodificado = leerBinario("texto_codificado.bin", codificado.size());
+    // Decodificar el archivo binario
+    auto startDecodificar = high_resolution_clock::now();
+    string textoCodificado = leerBinario(archivoSalida, codificado.size());
     string decodificado = decodificar(textoCodificado, raiz);
-     auto endDecodificar = high_resolution_clock::now();
-     auto duracionDecodificar = duration_cast<duration<double>>(endDecodificar - startDecodificar);
-  //se mide el tiempo hasta que lee el archivo binario y lo decodifica
+    auto endDecodificar = high_resolution_clock::now();
+    auto duracionDecodificar = duration_cast<nanoseconds>(endDecodificar - startDecodificar);
 
-    streampos tamanoOriginal = obtenerTamanoArchivo("PRUEBA.txt");
-    streampos tamanoCodificado = obtenerTamanoArchivo("texto_codificado.bin");
+    streampos tamanoOriginal = obtenerTamanoArchivo(archivoEntrada) * (1e-6); // en MB
+    streampos tamanoCodificado = obtenerTamanoArchivo(archivoSalida) * (1e-6); // en MB
 
-    
+    double tiempoC = duracionCodificar.count() * 1e-9; // en segundos
+    double tiempoD = duracionDecodificar.count() * 1e-9; // en segundos
+
     cout << "Texto original: " << texto << endl;
-    cout << "Codificado: " << codificado <<endl;
-    cout << "Decodificado: " << decodificado << endl;
-    cout << "Tamaño del archivo original: " <<tamanoOriginal << " bytes" << endl;
-    cout << "Tamaño del archivo codificado: " << tamanoCodificado<< "bytes" << endl;
-    cout << "Tiempo para codificar: "<<duracionCodificar.count() << "s" << endl;
-    cout << "Tiempo para Decodificar: "<< duracionDecodificar.count() << " s" << endl;
+    cout << "Tamaño del archivo original: " << tamanoOriginal << " MB" << endl;
+    cout << "Tamaño del archivo codificado: " << tamanoCodificado << " MB" << endl;
+    cout << "Tiempo para codificar: " << tiempoC << " s" << endl;
+    cout << "Tiempo para decodificar: " << tiempoD << " s" << endl;
 
     return 0;
 }
